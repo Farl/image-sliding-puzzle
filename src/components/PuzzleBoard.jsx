@@ -2,12 +2,21 @@ import { EMPTY_TILE, getBackgroundSize } from '../utils/puzzle';
 
 const MOBILE_BREAKPOINT = 640;
 
+const BOARD_PADDING = 8;
+const TILE_GAP = 6;
+
 function getTileSize(dimension) {
-  const widthBound = window.innerWidth <= MOBILE_BREAKPOINT ? window.innerWidth * 0.8 : window.innerWidth * 0.42;
-  const heightReserved = window.innerWidth <= MOBILE_BREAKPOINT ? 350 : 300;
-  const heightBound = Math.max(220, window.innerHeight - heightReserved);
-  const maxSize = Math.min(520, widthBound, heightBound);
-  return Math.floor(maxSize / dimension);
+  const isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
+  // Available width: viewport minus app shell padding, card padding, board padding, and column sharing on desktop
+  const columnFraction = isMobile ? 0.78 : 0.40;
+  const widthBound = window.innerWidth * columnFraction - BOARD_PADDING * 2;
+  // Available height: viewport minus timer (~70px), controls (~220px on mobile / ~180px desktop), gaps, paddings
+  const heightReserved = isMobile ? 380 : 320;
+  const heightBound = Math.max(180, window.innerHeight - heightReserved - BOARD_PADDING * 2);
+  // Subtract gaps from max available space before dividing by dimension
+  const gaps = TILE_GAP * (dimension - 1);
+  const maxTile = Math.min(500, widthBound, heightBound);
+  return Math.floor((maxTile - gaps) / dimension);
 }
 
 function PuzzleBoard({
@@ -29,9 +38,7 @@ function PuzzleBoard({
       <div
         className="board"
         style={{
-          gridTemplateColumns: `repeat(${dimension}, ${tileSize}px)`,
-          width: `${boardSize}px`,
-          height: `${boardSize}px`
+          gridTemplateColumns: `repeat(${dimension}, ${tileSize}px)`
         }}
       >
         {tiles.map((tile, index) => {
