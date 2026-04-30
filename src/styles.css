@@ -99,7 +99,7 @@ body {
 
 .board {
   display: grid;
-  gap: 6px;
+  gap: 2px;
   padding: 8px;
   border-radius: 22px;
   overflow: hidden;
@@ -145,12 +145,15 @@ body {
 
 .tile-face {
   position: absolute;
-  inset: 3px;
-  border-radius: 8px;
+  inset: 0;
+  border-radius: 10px;
   overflow: hidden;
+  /* bevel highlight on top, shadow on bottom — over the image, so border stays visible */
   box-shadow:
-    inset 0 0 0 1px #ffffff6e,
-    inset 0 10px 20px #ffffff26;
+    inset 0 2px 3px #ffffffbb,
+    inset 2px 0 3px #ffffff55,
+    inset 0 -2px 4px #6b7a9044,
+    inset -2px 0 4px #6b7a9033;
 }
 
 .tile-image {

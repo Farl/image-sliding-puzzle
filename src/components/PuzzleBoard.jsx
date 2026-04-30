@@ -3,7 +3,7 @@ import { EMPTY_TILE, getBackgroundSize } from '../utils/puzzle';
 const MOBILE_BREAKPOINT = 640;
 
 const BOARD_PADDING = 8;
-const TILE_GAP = 6;
+const TILE_GAP = 2;
 
 function getTileSize(dimension) {
   const isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
