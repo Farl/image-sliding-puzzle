@@ -1,11 +1,7 @@
 function ControlPanel({
   dimension,
-  imagePrompt,
   showNumbers,
-  loading,
   onDimensionChange,
-  onPromptChange,
-  onGenerateImage,
   onFileSelect,
   onToggleNumbers,
   onStartNewGame
@@ -23,22 +19,6 @@ function ControlPanel({
           onChange={(event) => onDimensionChange(Number(event.target.value))}
         />
       </label>
-
-      <div className="field-row prompt-row">
-        <label htmlFor="image-prompt">Image Prompt</label>
-        <div className="prompt-actions">
-          <input
-            id="image-prompt"
-            type="text"
-            value={imagePrompt}
-            onChange={(event) => onPromptChange(event.target.value)}
-            placeholder="Describe an image"
-          />
-          <button type="button" className="ghost-btn" onClick={onGenerateImage} disabled={loading}>
-            Generate
-          </button>
-        </div>
-      </div>
 
       <div className="field-row">
         <label htmlFor="file-input" className="ghost-btn upload-btn">

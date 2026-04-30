@@ -3,8 +3,10 @@ import { EMPTY_TILE, getBackgroundSize } from '../utils/puzzle';
 const MOBILE_BREAKPOINT = 640;
 
 function getTileSize(dimension) {
-  const viewportMax = window.innerWidth <= MOBILE_BREAKPOINT ? window.innerWidth * 0.82 : 440;
-  const maxSize = Math.min(520, viewportMax);
+  const widthBound = window.innerWidth <= MOBILE_BREAKPOINT ? window.innerWidth * 0.8 : window.innerWidth * 0.42;
+  const heightReserved = window.innerWidth <= MOBILE_BREAKPOINT ? 350 : 300;
+  const heightBound = Math.max(220, window.innerHeight - heightReserved);
+  const maxSize = Math.min(520, widthBound, heightBound);
   return Math.floor(maxSize / dimension);
 }
 
@@ -56,7 +58,12 @@ function PuzzleBoard({
               disabled={isEmpty}
               aria-label={isEmpty ? 'Empty tile' : `Tile ${tile}`}
             >
-              {!isEmpty && <span className="tile-image" style={imageStyle} />}
+              {!isEmpty && (
+                <span className="tile-face">
+                  <span className="tile-image" style={imageStyle} />
+                </span>
+              )}
+              {isEmpty && <span className="tile-slot" />}
               {!isEmpty && showNumbers && <span className="tile-number">{tile}</span>}
             </button>
           );

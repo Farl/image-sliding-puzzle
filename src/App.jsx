@@ -25,12 +25,8 @@ function App() {
 
         <ControlPanel
           dimension={state.dimension}
-          imagePrompt={state.imagePrompt}
           showNumbers={state.showNumbers}
-          loading={state.loading}
           onDimensionChange={actions.setDimension}
-          onPromptChange={actions.setImagePrompt}
-          onGenerateImage={actions.generateImage}
           onFileSelect={actions.onFileSelect}
           onToggleNumbers={actions.setShowNumbers}
           onStartNewGame={actions.startNewGame}

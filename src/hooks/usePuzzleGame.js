@@ -19,7 +19,6 @@ export function usePuzzleGame() {
   const [dimension, setDimension] = useState(3);
   const [tiles, setTiles] = useState(() => shuffleTiles(3));
   const [showNumbers, setShowNumbers] = useState(true);
-  const [imagePrompt, setImagePrompt] = useState('');
   const [image, setImage] = useState('');
   const [imageAspectRatio, setImageAspectRatio] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -120,61 +119,28 @@ export function usePuzzleGame() {
     reader.readAsDataURL(selected);
   }, []);
 
-  const generateImage = useCallback(async () => {
-    const prompt = imagePrompt.trim();
-    if (!prompt) {
-      window.alert('Please enter an image description.');
-      return;
-    }
-
-    if (typeof window.websim?.imageGen !== 'function') {
-      window.alert('Image generation is unavailable in this environment.');
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const result = await window.websim.imageGen({
-        prompt,
-        aspect_ratio: '1:1'
-      });
-      const loaded = await loadImageInfo(result.url);
-      setImage(loaded.src);
-      setImageAspectRatio(loaded.aspectRatio);
-      initializeBoard(dimension);
-    } catch (error) {
-      console.error('Failed to generate image', error);
-      window.alert('Failed to generate image. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  }, [dimension, imagePrompt, initializeBoard]);
-
   const state = useMemo(
     () => ({
       dimension,
       tiles,
       showNumbers,
-      imagePrompt,
       image,
       imageAspectRatio,
       loading,
       elapsedSeconds
     }),
-    [dimension, tiles, showNumbers, imagePrompt, image, imageAspectRatio, loading, elapsedSeconds]
+    [dimension, tiles, showNumbers, image, imageAspectRatio, loading, elapsedSeconds]
   );
 
   const actions = useMemo(
     () => ({
       setDimension: (next) => setDimension(Math.min(8, Math.max(3, Number(next) || 3))),
-      setImagePrompt,
       setShowNumbers,
       startNewGame: () => initializeBoard(dimension),
       moveTile,
-      onFileSelect,
-      generateImage
+      onFileSelect
     }),
-    [dimension, generateImage, initializeBoard, moveTile, onFileSelect]
+    [dimension, initializeBoard, moveTile, onFileSelect]
   );
 
   return { state, actions };
