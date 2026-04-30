@@ -1,0 +1,269 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap');
+
+:root {
+  --bg-top: #fff8ec;
+  --bg-bottom: #d8ecff;
+  --card: #ffffffde;
+  --border: #ffffff;
+  --ink: #14213d;
+  --muted: #4f5d75;
+  --brand: #0f9d82;
+  --brand-press: #0c7a65;
+  --ghost: #edf4ff;
+  --shadow: 0 28px 70px rgba(20, 33, 61, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--ink);
+  background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 28px 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.halo {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.halo-one {
+  width: 280px;
+  height: 280px;
+  background: #ffd08a;
+  top: 2%;
+  left: -8%;
+}
+
+.halo-two {
+  width: 340px;
+  height: 340px;
+  background: #9ad7ff;
+  right: -12%;
+  bottom: -6%;
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  width: min(760px, 100%);
+  border: 1px solid var(--border);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+  border-radius: 26px;
+  padding: 22px;
+  display: grid;
+  gap: 22px;
+  animation: rise 500ms ease;
+}
+
+.timer {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(2rem, 5vw, 3rem);
+  letter-spacing: 0.06em;
+}
+
+.board-wrap {
+  display: grid;
+  place-items: center;
+}
+
+.board {
+  display: grid;
+  gap: 5px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px #ffffff66;
+}
+
+.tile {
+  border: 0;
+  cursor: pointer;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f2f5f9;
+  transition: transform 120ms ease;
+}
+
+.tile:hover {
+  transform: translateY(-2px);
+}
+
+.tile:disabled {
+  cursor: default;
+}
+
+.tile-empty {
+  background: transparent;
+}
+
+.tile-image {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+}
+
+.tile-number {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #1f2f49;
+  background: #ffffffe3;
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+.panel {
+  display: grid;
+  gap: 12px;
+}
+
+.field-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.field-row input[type='number'],
+.field-row input[type='text'] {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid #c7d6ea;
+  font: inherit;
+  padding: 10px 12px;
+}
+
+.prompt-row {
+  align-items: stretch;
+  flex-direction: column;
+}
+
+.prompt-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.prompt-actions input {
+  flex: 1;
+}
+
+.primary-btn,
+.ghost-btn {
+  font: inherit;
+  border-radius: 12px;
+  border: 0;
+  padding: 11px 14px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.primary-btn {
+  background: var(--brand);
+  color: #fff;
+}
+
+.primary-btn:hover {
+  background: var(--brand-press);
+}
+
+.ghost-btn {
+  background: var(--ghost);
+  color: var(--ink);
+  border: 1px solid #c7d6ea;
+}
+
+.upload-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input[type='file'] {
+  display: none;
+}
+
+.toggle-row {
+  justify-content: space-between;
+}
+
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: #0d1b2aaa;
+  display: grid;
+  place-items: center;
+  z-index: 9;
+}
+
+.loader {
+  width: 56px;
+  height: 56px;
+  border: 5px solid #ffffff88;
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 680px) {
+  .card {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .field-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .prompt-actions {
+    flex-direction: column;
+  }
+}
